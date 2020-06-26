@@ -11,7 +11,7 @@ const MainLayout = () => {
       <div className={styles.container}>
         <Countries />
         <Switch>
-          <Route exact path='/country/:slug'>
+          <Route exact path='/:slug'>
             <DetailedView />
           </Route>
         </Switch>

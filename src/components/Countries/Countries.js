@@ -5,26 +5,38 @@ import styles from './Countries.module.scss';
 import Button from '../Button/Button';
 
 const Countries = props => {
+  const mostInfectedCountries = () => {
+    return props.countries.sort((a, b) => (a.TotalConfirmed < b.TotalConfirmed ? 1 : -1));
+  };
+
+  if (props.countries) {
+    console.log(mostInfectedCountries());
+  }
+
   const list =
     props.countries && props.countries.length > 0 ? (
       <table className={styles.table}>
         <thead>
           <tr className={[styles.row, styles.header].join(' ')}>
+            <th>No</th>
             <th>Country</th>
             <th>Total infected</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {props.countries.slice(0, 10).map(country => (
-            <tr key={country.Slug} className={styles.row}>
-              <th>{country.Country}</th>
-              <th>{country.TotalConfirmed}</th>
-              <th>
-                <Link to={`/country/${country.Slug}`}>More details</Link>
-              </th>
-            </tr>
-          ))}
+          {mostInfectedCountries()
+            .slice(0, 10)
+            .map((country, index) => (
+              <tr key={country.Slug} className={styles.row}>
+                <th>{index + 1}.</th>
+                <th>{country.Country}</th>
+                <th>{country.TotalConfirmed}</th>
+                <th>
+                  <Link to={`/${country.Slug}`}>More details</Link>
+                </th>
+              </tr>
+            ))}
         </tbody>
       </table>
     ) : null;
