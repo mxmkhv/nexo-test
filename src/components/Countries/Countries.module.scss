@@ -1,24 +1,27 @@
 .container {
-  width: 700px;
+  flex: 1;
   margin: 0 0 30px;
   border-radius: 30px;
-
-  h1 {
-    text-align: center;
-  }
+  text-align: center;
 }
 
-.list {
+.table {
+  width: 60%;
+  margin: 0 auto;
+  border: 1px solid lightcoral;
+  border-radius: 15px;
+  padding: 10px;
 }
 
-.listItem {
+.row {
+  font-weight: 200;
   padding: 10px 20px;
   list-style: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  span {
-    flex: 1;
+  th {
+    width: 33%;
+    text-align: center;
   }
 }

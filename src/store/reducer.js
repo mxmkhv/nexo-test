@@ -1,12 +1,12 @@
 const initialState = {
-  data: null
+  countries: null
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_DATA':
       return {
-        data: action.data
+        countries: action.data.Countries
       };
     default: {
       return state;
