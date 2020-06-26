@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './Countries.module.scss';
 import Button from '../Button/Button';
 
@@ -18,24 +18,26 @@ const Countries = props => {
       <table className={styles.table}>
         <thead>
           <tr className={[styles.row, styles.header].join(' ')}>
-            <th>No</th>
-            <th>Country</th>
+            <th width='10%'>No</th>
+            <th width='50%'>Country</th>
             <th>Total infected</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {mostInfectedCountries()
             .slice(0, 10)
             .map((country, index) => (
-              <tr key={country.Slug} className={styles.row}>
-                <th>{index + 1}.</th>
-                <th>{country.Country}</th>
-                <th>{country.TotalConfirmed}</th>
-                <th>
-                  <Link to={`/${country.Slug}`}>More details</Link>
-                </th>
-              </tr>
+              <NavLink
+                to={`/${country.Slug}`}
+                className={styles.link}
+                activeClassName={styles.active}
+              >
+                <tr key={country.Slug} className={styles.row}>
+                  <th width='10%'>{index + 1}.</th>
+                  <th width='50%'>{country.Country}</th>
+                  <th>{country.TotalConfirmed}</th>
+                </tr>
+              </NavLink>
             ))}
         </tbody>
       </table>
