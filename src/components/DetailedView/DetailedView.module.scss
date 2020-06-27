@@ -32,3 +32,12 @@
     transition: transform 200ms ease-in-out;
   }
 }
+
+.stats {
+  span {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    display: block;
+  }
+}

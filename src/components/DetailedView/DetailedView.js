@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import HistoryModal from '../HistoryModal/HistoryModal';
 import Button from '../Button/Button';
 import CloseIcon from '../../images/close.svg';
+import { formatNumber } from '../../utils/utils';
 
 const DetailedView = props => {
   let { slug } = useParams();
@@ -18,17 +19,17 @@ const DetailedView = props => {
   let details = props.countries ? props.countries.find(country => country.Slug === slug) : null;
 
   let countryDetails = details ? (
-    <div>
+    <>
       <h2>{details.Country}</h2>
-      <div>
+      <div className={styles.stats}>
         <h3>Total Confirmed:</h3>
-        <h4>{details.TotalConfirmed}</h4>
+        <span>{formatNumber(details.TotalConfirmed)}</span>
         <h3>Total Deaths:</h3>
-        <h4>{details.TotalDeaths}</h4>
+        <span>{formatNumber(details.TotalDeaths)}</span>
         <h3>Total Recovered:</h3>
-        <h4>{details.TotalRecovered}</h4>
+        <span>{formatNumber(details.TotalRecovered)}</span>
       </div>
-    </div>
+    </>
   ) : null;
 
   return (

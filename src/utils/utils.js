@@ -10,3 +10,5 @@ export const sortCountries = (countries, order, key) => {
     return countries.sort((a, b) => (a[key] < b[key] ? -1 : 1));
   }
 };
+
+export const formatNumber = num => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
