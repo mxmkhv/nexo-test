@@ -1,0 +1,90 @@
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal {
+  background: #fff;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 500px;
+  height: 500px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 15px;
+  z-index: 1;
+}
+
+.heading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--darkred);
+  padding: 5px 10px;
+
+  h3 {
+    color: var(--white);
+    line-height: 25px;
+  }
+
+  img {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+  }
+}
+
+.history {
+  overflow-y: scroll;
+  height: 100%;
+  padding: 35px 0px 0px;
+
+  button {
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+    border: none;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    padding: 10px;
+  }
+
+  thead {
+    background-color: var(--red);
+    color: var(--white);
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: lightgray;
+    color: var(--white);
+  }
+  tbody th:nth-child(1) {
+    background-color: rgba(15, 25, 35, 0.2);
+  }
+  tbody th:nth-child(2) {
+    background-color: rgba(0, 181, 204, 0.3);
+  }
+  tbody th:nth-child(3) {
+    background-color: rgba(41, 241, 195, 0.3);
+  }
+  tbody th:nth-child(4) {
+    background-color: rgba(240, 52, 52, 0.3);
+  }
+}

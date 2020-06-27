@@ -12,9 +12,24 @@
   overflow: hidden;
   border-collapse: collapse;
 
+  thead {
+    background-color: var(--darkred);
+    color: var(--white);
+  }
+
   thead th {
     font-weight: bold;
   }
+
+  tbody tr:nth-child(even) {
+    background-color: var(--red);
+    color: var(--white);
+
+    a {
+      color: var(--white);
+    }
+  }
+
   tbody th {
     font-weight: 300;
   }
@@ -30,6 +45,24 @@
   th {
     text-align: center;
   }
+}
+
+.sortButton {
+  border: none;
+  background: rgba(255, 255, 255, 0);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  margin: 0 auto;
+}
+
+.sortIcon {
+  font-size: 12px;
+  margin-left: 5px;
 }
 
 .link {
