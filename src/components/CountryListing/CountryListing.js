@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styles from './CountryListing.module.scss';
 import Button from '../Button/Button';
+import Loader from '../Loader/Loader';
 import ConspiracyModal from '../ConspiracyModal/ConspiracyModal';
 import { sortCountries, formatNumber } from '../../utils/utils';
 
 const CountryListing = ({ countries, fetchData }) => {
   const [sortOrder, setSortOrder] = useState('ascending');
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const mostInfectedCountries = countries
     ? countries.sort((a, b) => (a.TotalConfirmed < b.TotalConfirmed ? 1 : -1)).slice(0, 10)
@@ -24,7 +26,7 @@ const CountryListing = ({ countries, fetchData }) => {
   };
 
   const list =
-    countries && countries.length > 0 ? (
+    countries && !isLoading ? (
       <table className={styles.table}>
         <thead>
           <tr className={[styles.row, styles.header].join(' ')}>
@@ -71,7 +73,7 @@ const CountryListing = ({ countries, fetchData }) => {
     ) : null;
 
   const fetchButton = countries ? null : (
-    <Button type='primary' title='Get terrified' onClick={fetchData} />
+    <Button type='primary' title='Get terrified' onClick={() => fetchData(setIsLoading)} />
   );
 
   const truthButton = countries ? (
@@ -80,6 +82,7 @@ const CountryListing = ({ countries, fetchData }) => {
 
   return (
     <div className={styles.container}>
+      {isLoading ? <Loader /> : null}
       {list}
       {fetchButton}
       {truthButton}
@@ -96,10 +99,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: () => {
+    fetchData: setIsLoading => {
+      setIsLoading(true);
       fetch('https://api.covid19api.com/summary')
         .then(res => res.json())
-        .then(data => dispatch({ type: 'FETCH_DATA', data }));
+        .then(data => {
+          setIsLoading(false);
+          dispatch({ type: 'FETCH_DATA', data });
+        });
     }
   };
 };
