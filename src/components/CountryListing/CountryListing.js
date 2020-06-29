@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styles from './CountryListing.module.scss';
 import Button from '../Button/Button';
 import Loader from '../Loader/Loader';
@@ -8,9 +8,18 @@ import ConspiracyModal from '../ConspiracyModal/ConspiracyModal';
 import { sortCountries, formatNumber } from '../../utils/utils';
 
 const CountryListing = ({ countries, fetchData }) => {
+  const location = useLocation();
   const [sortOrder, setSortOrder] = useState('ascending');
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState(null);
+
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      fetchData(setIsLoading, setErrors);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const mostInfectedCountries = countries
     ? countries.sort((a, b) => (a.TotalConfirmed < b.TotalConfirmed ? 1 : -1)).slice(0, 10)
@@ -73,7 +82,11 @@ const CountryListing = ({ countries, fetchData }) => {
     ) : null;
 
   const fetchButton = countries ? null : (
-    <Button type='primary' title='Get terrified' onClick={() => fetchData(setIsLoading)} />
+    <Button
+      type='primary'
+      title='Get terrified'
+      onClick={() => fetchData(setIsLoading, setErrors)}
+    />
   );
 
   const truthButton = countries ? (
@@ -82,7 +95,8 @@ const CountryListing = ({ countries, fetchData }) => {
 
   return (
     <div className={styles.container}>
-      {isLoading ? <Loader /> : null}
+      {isLoading ? <Loader errors={errors ? errors : null} /> : null}
+      {errors ? <h2 className={styles.error}>{errors}</h2> : null}
       {list}
       {fetchButton}
       {truthButton}
@@ -99,13 +113,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: setIsLoading => {
+    fetchData: (setIsLoading, setErrors) => {
       setIsLoading(true);
       fetch('https://api.covid19api.com/summary')
         .then(res => res.json())
         .then(data => {
           setIsLoading(false);
           dispatch({ type: 'FETCH_DATA', data });
+        })
+        .catch(error => {
+          setErrors(error.message);
         });
     }
   };

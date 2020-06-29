@@ -13,7 +13,6 @@ const DetailedView = props => {
 
   const openModal = () => {
     setIsOpen(true);
-    props.fetchCountryData(slug);
   };
 
   let details = props.countries ? props.countries.find(country => country.Slug === slug) : null;
@@ -41,31 +40,15 @@ const DetailedView = props => {
       <div>
         <Button type='secondary' title='Infection history' onClick={openModal} />
       </div>
-      {isOpen ? <HistoryModal isOpen={setIsOpen} /> : null}
+      {isOpen ? <HistoryModal slug={slug} isOpen={setIsOpen} /> : null}
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    countries: state.countries,
-    countryData: state.countryData
+    countries: state.countries
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchCountryData: slug => {
-      fetch(`https://api.covid19api.com/total/country/${slug}`)
-        .then(res => res.json())
-        .then(data =>
-          dispatch({
-            type: 'FETCH_COUNTRYDATA',
-            data
-          })
-        );
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DetailedView);
+export default connect(mapStateToProps)(DetailedView);

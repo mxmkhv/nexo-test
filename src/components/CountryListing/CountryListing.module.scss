@@ -84,3 +84,11 @@
   font-weight: bold;
   text-decoration: underline;
 }
+
+.error {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--red);
+}
